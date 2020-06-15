@@ -2,9 +2,9 @@ sudo: required
 services:
   - docker
 before_install:
-  - docker build -t strisen/multi-docker -f ./client/Dockerfile.dev ./client
+  - docker build -t strisen/react-test -f ./client/Dockerfile.dev ./client
 script:
-  - docker run -e CI=true strisen/multi-docker npm test
+  - docker run -e CI=true strisen/react-test npm test
 after_success:
   - docker build -t strisen/multi-client ./client
   - docker build -t strisen/multi-nginx ./nginx
