@@ -19,11 +19,16 @@ const pgClient = new Pool({
   port: keys.pgPort,
   connectionTimeoutMillis: 3000
 });
-pgClient.on('error', () => console.log('Lost PG connection'));
-
-pgClient
-  .query('CREATE TABLE IF NOT EXISTS seen (number INT)')
-  .catch(err => console.log(err));
+// pgClient.on('error', () => console.log('Lost PG connection'));
+//
+// pgClient
+//   .query('CREATE TABLE IF NOT EXISTS seen (number INT)')
+//   .catch(err => console.log(err));
+pgClient.on('connect', () => {
+  pgClient
+    .query('CREATE TABLE IF NOT EXISTS seen (number INT)')
+    .catch((err) => console.log(err));
+})
 
 // Redis Client Setup
 const redis = require('redis');
